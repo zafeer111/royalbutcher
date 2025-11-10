@@ -21,8 +21,9 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Zafeer',
             'email' => 'zafeer@devop360.com',
+            'phone_number' => '+923352375256',
             'email_verified_at' => now(),
-            'password' => Hash::make('devop360'),
+            'password' => Hash::make('password'), // password
             'remember_token' => Str::random(10),
         ]);
     }

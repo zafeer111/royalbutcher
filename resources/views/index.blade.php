@@ -1,31 +1,39 @@
 @extends('layouts.vertical', ['title' => 'Dashboard'])
 
 @section('content')
+<!-- START: Header -->
 <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
     <div class="flex-grow-1">
         <h4 class="fs-18 fw-semibold m-0">Dashboard</h4>
     </div>
 </div>
+<!-- END: Header -->
 
 <!-- start row -->
 <div class="row">
     <div class="col-md-12 col-xl-12">
         <div class="row g-3">
 
+            <!-- Stat Card 1: Website Traffic -->
             <div class="col-md-6 col-xl-3">
-                <div class="card">
+                <div class="card shadow-sm border-0"> <!-- Design Change: Added shadow-sm, border-0 -->
                     <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="fs-14 mb-1">Website Traffic</div>
-                        </div>
-
-                        <div class="d-flex align-items-baseline mb-2">
-                            <div class="fs-22 mb-0 me-2 fw-semibold text-black">91.6K</div>
-                            <div class="me-auto">
-                                <span class="text-primary d-inline-flex align-items-center">
-                                    15%
-                                    <i data-feather="trending-up" class="ms-1" style="height: 22px; width: 22px;"></i>
-                                </span>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="fs-14 mb-1 text-muted">Website Traffic</div> <!-- Design Change: text-muted -->
+                                <div class="d-flex align-items-baseline mb-2">
+                                    <div class="fs-22 mb-0 me-2 fw-semibold text-black">91.6K</div>
+                                    <div class="me-auto">
+                                        <span class="text-primary d-inline-flex align-items-center">
+                                            15%
+                                            <i data-feather="trending-up" class="ms-1" style="height: 22px; width: 22px;"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Design Change: Added styled icon -->
+                            <div class="bg-primary-subtle text-primary p-2 rounded-circle">
+                                <i data-feather="globe" style="height: 24px; width: 24px;"></i>
                             </div>
                         </div>
                         <div id="website-visitors" class="apex-charts"></div>
@@ -33,20 +41,26 @@
                 </div>
             </div>
 
+            <!-- Stat Card 2: Conversion rate -->
             <div class="col-md-6 col-xl-3">
-                <div class="card">
+                <div class="card shadow-sm border-0"> <!-- Design Change: Added shadow-sm, border-0 -->
                     <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="fs-14 mb-1">Conversion rate</div>
-                        </div>
-
-                        <div class="d-flex align-items-baseline mb-2">
-                            <div class="fs-22 mb-0 me-2 fw-semibold text-black">15%</div>
-                            <div class="me-auto">
-                                <span class="text-danger d-inline-flex align-items-center">
-                                    10%
-                                    <i data-feather="trending-down" class="ms-1" style="height: 22px; width: 22px;"></i>
-                                </span>
+                         <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="fs-14 mb-1 text-muted">Conversion rate</div> <!-- Design Change: text-muted -->
+                                <div class="d-flex align-items-baseline mb-2">
+                                    <div class="fs-22 mb-0 me-2 fw-semibold text-black">15%</div>
+                                    <div class="me-auto">
+                                        <span class="text-danger d-inline-flex align-items-center">
+                                            10%
+                                            <i data-feather="trending-down" class="ms-1" style="height: 22px; width: 22px;"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Design Change: Added styled icon -->
+                            <div class="bg-danger-subtle text-danger p-2 rounded-circle">
+                                <i data-feather="percent" style="height: 24px; width: 24px;"></i>
                             </div>
                         </div>
                         <div id="conversion-visitors" class="apex-charts"></div>
@@ -54,20 +68,26 @@
                 </div>
             </div>
 
+            <!-- Stat Card 3: Session duration -->
             <div class="col-md-6 col-xl-3">
-                <div class="card">
+                <div class="card shadow-sm border-0"> <!-- Design Change: Added shadow-sm, border-0 -->
                     <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="fs-14 mb-1">Session duration</div>
-                        </div>
-
-                        <div class="d-flex align-items-baseline mb-2">
-                            <div class="fs-22 mb-0 me-2 fw-semibold text-black">90 Sec</div>
-                            <div class="me-auto">
-                                <span class="text-success d-inline-flex align-items-center">
-                                    25%
-                                    <i data-feather="trending-up" class="ms-1" style="height: 22px; width: 22px;"></i>
-                                </span>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="fs-14 mb-1 text-muted">Session duration</div> <!-- Design Change: text-muted -->
+                                <div class="d-flex align-items-baseline mb-2">
+                                    <div class="fs-22 mb-0 me-2 fw-semibold text-black">90 Sec</div>
+                                    <div class="me-auto">
+                                        <span class="text-success d-inline-flex align-items-center">
+                                            25%
+                                            <i data-feather="trending-up" class="ms-1" style="height: 22px; width: 22px;"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Design Change: Added styled icon -->
+                            <div class="bg-success-subtle text-success p-2 rounded-circle">
+                                <i data-feather="clock" style="height: 24px; width: 24px;"></i>
                             </div>
                         </div>
                         <div id="session-visitors" class="apex-charts"></div>
@@ -75,20 +95,26 @@
                 </div>
             </div>
 
+            <!-- Stat Card 4: Active Users -->
             <div class="col-md-6 col-xl-3">
-                <div class="card">
+                <div class="card shadow-sm border-0"> <!-- Design Change: Added shadow-sm, border-0 -->
                     <div class="card-body">
-                        <div class="d-flex align-items-center">
-                            <div class="fs-14 mb-1">Active Users</div>
-                        </div>
-
-                        <div class="d-flex align-items-baseline mb-2">
-                            <div class="fs-22 mb-0 me-2 fw-semibold text-black">2,986</div>
-                            <div class="me-auto">
-                                <span class="text-success d-inline-flex align-items-center">
-                                    4%
-                                    <i data-feather="trending-up" class="ms-1" style="height: 22px; width: 22px;"></i>
-                                </span>
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="fs-14 mb-1 text-muted">Active Users</div> <!-- Design Change: text-muted -->
+                                <div class="d-flex align-items-baseline mb-2">
+                                    <div class="fs-22 mb-0 me-2 fw-semibold text-black">2,986</div>
+                                    <div class="me-auto">
+                                        <span class="text-success d-inline-flex align-items-center">
+                                            4%
+                                            <i data-feather="trending-up" class="ms-1" style="height: 22px; width: 22px;"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Design Change: Added styled icon -->
+                            <div class="bg-info-subtle text-info p-2 rounded-circle">
+                                <i data-feather="users" style="height: 24px; width: 24px;"></i>
                             </div>
                         </div>
                         <div id="active-users" class="apex-charts"></div>
@@ -102,14 +128,15 @@
 <!-- Start Monthly Sales -->
 <div class="row">
     <div class="col-md-6 col-xl-8">
-        <div class="card">
+        <div class="card shadow-sm border-0"> <!-- Design Change: Added shadow-sm, border-0 -->
             
-            <div class="card-header">
+            <!-- Design Change: Added bg-white, py-3, updated icon container -->
+            <div class="card-header bg-white py-3"> 
                 <div class="d-flex align-items-center">
-                    <div class="border border-dark rounded-2 me-2 widget-icons-sections">
-                        <i data-feather="bar-chart" class="widgets-icons"></i>
+                    <div class="bg-primary-subtle rounded-2 me-2 widget-icons-sections p-2">
+                        <i data-feather="bar-chart" class="widgets-icons text-primary"></i>
                     </div>
-                    <h5 class="card-title mb-0">Monthly Sales</h5>
+                    <h5 class="card-title mb-0 fw-semibold">Monthly Sales</h5> <!-- Design Change: fw-semibold -->
                 </div>
             </div>
 
@@ -121,22 +148,25 @@
     </div>
 
     <div class="col-md-6 col-xl-4">
-        <div class="card overflow-hidden">
+        <div class="card overflow-hidden shadow-sm border-0"> <!-- Design Change: Added shadow-sm, border-0 -->
 
-            <div class="card-header">
+            <!-- Design Change: Added bg-white, py-3, updated icon container -->
+            <div class="card-header bg-white py-3">
                 <div class="d-flex align-items-center">
-                    <div class="border border-dark rounded-2 me-2 widget-icons-sections">
-                        <i data-feather="tablet" class="widgets-icons"></i>
+                    <div class="bg-success-subtle rounded-2 me-2 widget-icons-sections p-2">
+                        <i data-feather="tablet" class="widgets-icons text-success"></i>
                     </div>
-                    <h5 class="card-title mb-0">Best Traffic Source</h5>
+                    <h5 class="card-title mb-0 fw-semibold">Best Traffic Source</h5> <!-- Design Change: fw-semibold -->
                 </div>
             </div>
 
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-traffic mb-0">
+                    <!-- Design Change: Added table-hover, align-middle -->
+                    <table class="table table-traffic table-hover align-middle mb-0">
                         <tbody>
-                            <thead>
+                            <!-- Design Change: Added table-light -->
+                            <thead class="table-light">
                                 <tr>
                                     <th>Network</th>
                                     <th colspan="2">Visitors</th>
@@ -225,14 +255,15 @@
 
 <div class="row">
     <div class="col-md-6 col-xl-6">
-        <div class="card">
+        <div class="card shadow-sm border-0"> <!-- Design Change: Added shadow-sm, border-0 -->
             
-            <div class="card-header">
+            <!-- Design Change: Added bg-white, py-3, updated icon container -->
+            <div class="card-header bg-white py-3">
                 <div class="d-flex align-items-center">
-                    <div class="border border-dark rounded-2 me-2 widget-icons-sections">
-                        <i data-feather="minus-square" class="widgets-icons"></i>
+                    <div class="bg-warning-subtle rounded-2 me-2 widget-icons-sections p-2">
+                        <i data-feather="minus-square" class="widgets-icons text-warning"></i>
                     </div>
-                    <h5 class="card-title mb-0">Audiences By Time Of Day</h5>
+                    <h5 class="card-title mb-0 fw-semibold">Audiences By Time Of Day</h5> <!-- Design Change: fw-semibold -->
                 </div>
             </div>
 
@@ -244,23 +275,26 @@
     </div>
 
     <div class="col-md-6 col-xl-6">
-        <div class="card overflow-hidden">
+        <div class="card overflow-hidden shadow-sm border-0"> <!-- Design Change: Added shadow-sm, border-0 -->
             
-            <div class="card-header">
+            <!-- Design Change: Added bg-white, py-3, updated icon container -->
+            <div class="card-header bg-white py-3">
                 <div class="d-flex align-items-center">
-                    <div class="border border-dark rounded-2 me-2 widget-icons-sections">
-                        <i data-feather="table" class="widgets-icons"></i>
+                    <div class="bg-info-subtle rounded-2 me-2 widget-icons-sections p-2">
+                        <i data-feather="table" class="widgets-icons text-info"></i>
                     </div>
-                    <h5 class="card-title mb-0">Most Visited Pages</h5>
+                    <h5 class="card-title mb-0 fw-semibold">Most Visited Pages</h5> <!-- Design Change: fw-semibold -->
                 </div>
             </div>
 
             <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-traffic mb-0">
+                    <!-- Design Change: Added table-hover, align-middle -->
+                    <table class="table table-traffic table-hover align-middle mb-0">
                         <tbody>
 
-                            <thead>
+                            <!-- Design Change: Added table-light -->
+                            <thead class="table-light">
                                 <tr>
                                     <th>Page name</th>
                                     <th>Visitors</th>

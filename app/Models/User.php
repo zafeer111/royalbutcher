@@ -6,10 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasRoles, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -18,7 +20,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'profile_image',
         'email',
+        'phone_number',
+        'city_id',
+        'otp_code',
+        'otp_expires_at',
         'password',
     ];
 
@@ -30,6 +37,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'otp_code',
+        'otp_expires_at',
     ];
 
     /**
@@ -41,7 +50,14 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'otp_expires_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+
+    public function city()
+    {
+        return $this->belongsTo(\Nnjeim\World\Models\City::class, 'city_id');
     }
 }
