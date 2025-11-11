@@ -48,21 +48,24 @@ class ItemController extends Controller
             'discount_percent' => 'nullable|numeric|min:0|max:100',
             'status' => 'required|boolean',
             // 'customization_options' => 'nullable|json' // Agar form se JSON string aye
+            'add_ons' => 'nullable|array',
+            'add_ons.*.name' => 'nullable|string|max:255',
+            'add_ons.*.price' => 'nullable|numeric|min:0',
         ]);
 
         $data = $request->except('image');
         $data['status'] = $request->status == 1;
-        
+
         // Handle customization options (agar simple key-value form se aa raha hai)
         // Isay aap apne form ke mutabiq adjust kar sakte hain
         if ($request->has('options_name') && $request->has('options_price')) {
-             $options = [];
-             foreach($request->options_name as $key => $name) {
-                 if(!empty($name) && isset($request->options_price[$key])) {
-                     $options[] = ['name' => $name, 'price' => $request->options_price[$key]];
-                 }
-             }
-             $data['customization_options'] = json_encode($options);
+            $options = [];
+            foreach ($request->options_name as $key => $name) {
+                if (!empty($name) && isset($request->options_price[$key])) {
+                    $options[] = ['name' => $name, 'price' => $request->options_price[$key]];
+                }
+            }
+            $data['customization_options'] = json_encode($options);
         }
 
         if ($request->hasFile('image')) {
@@ -70,10 +73,26 @@ class ItemController extends Controller
             $data['image'] = $path;
         }
 
+        // --- NEW: Handle Add-ons ---
+        $addOnsData = [];
+        if ($request->has('add_ons')) {
+            foreach ($request->add_ons as $addOn) {
+                // Sirf woh add-ons save karein jinka naam aur price ho
+                if (!empty($addOn['name']) && isset($addOn['price'])) {
+                    $addOnsData[] = [
+                        'name' => $addOn['name'],
+                        'price' => (float) $addOn['price'],
+                    ];
+                }
+            }
+        }
+        $data['customization_options'] = $addOnsData; // Model isay automatically JSON bana dega
+        // --- End of New Add-on Logic ---
+
         Item::create($data);
 
         return redirect()->route('items.index')
-                         ->with('success', 'Item created successfully.');
+            ->with('success', 'Item created successfully.');
     }
 
     /**
@@ -107,6 +126,9 @@ class ItemController extends Controller
             'base_price' => 'required|numeric|min:0',
             'discount_percent' => 'nullable|numeric|min:0|max:100',
             'status' => 'required|boolean',
+            'add_ons' => 'nullable|array',
+            'add_ons.*.name' => 'nullable|string|max:255',
+            'add_ons.*.price' => 'nullable|numeric|min:0',
         ]);
 
         $data = $request->except('image');
@@ -124,10 +146,26 @@ class ItemController extends Controller
             $data['image'] = $path;
         }
 
+
+        // --- NEW: Handle Add-ons ---
+        $addOnsData = [];
+        if ($request->has('add_ons')) {
+            foreach ($request->add_ons as $addOn) {
+                if (!empty($addOn['name']) && isset($addOn['price'])) {
+                    $addOnsData[] = [
+                        'name' => $addOn['name'],
+                        'price' => (float) $addOn['price'],
+                    ];
+                }
+            }
+        }
+        $data['customization_options'] = $addOnsData;
+        // --- End of New Add-on Logic ---
+
         $item->update($data);
 
         return redirect()->route('items.index')
-                         ->with('success', 'Item updated successfully.');
+            ->with('success', 'Item updated successfully.');
     }
 
     /**
@@ -143,6 +181,6 @@ class ItemController extends Controller
         $item->delete();
 
         return redirect()->route('items.index')
-                         ->with('success', 'Item deleted successfully.');
+            ->with('success', 'Item deleted successfully.');
     }
 }

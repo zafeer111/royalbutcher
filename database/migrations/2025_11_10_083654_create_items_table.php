@@ -20,12 +20,11 @@ return new class extends Migration
             $table->string('image')->nullable();
             
             // Price fields
-            $table->decimal('base_price', 8, 2); // e.g., 999999.99
-            $table->decimal('discount_percent', 5, 2)->default(0.00); // e.g., 15.50%
+            $table->decimal('base_price', 8, 2);
+            $table->decimal('discount_percent', 5, 2)->default(0.00);
             
-            // Note: discounted_price hum model mein calculate karengay (accessor)
             
-            $table->boolean('status')->default(true); // Active/Inactive
+            $table->boolean('status')->default(true);
             
             // JSON field for extra options
             $table->json('customization_options')->nullable(); 

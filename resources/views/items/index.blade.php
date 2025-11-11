@@ -49,6 +49,7 @@
                                 <th>Category</th>
                                 <th>Base Price</th>
                                 <th>Discounted Price</th>
+                                <th>Add-ons</th> <!-- NEW COLUMN -->
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -80,6 +81,13 @@
                                         @endif
                                     </td>
                                     <td>
+                                        <!-- NEW COLUMN DATA -->
+                                        @php
+                                            $count = $item->customization_options ? count($item->customization_options) : 0;
+                                        @endphp
+                                        <span class="badge bg-secondary-subtle text-secondary">{{ $count }} Add-on(s)</span>
+                                    </td>
+                                    <td>
                                         @if ($item->status)
                                             <span class="badge bg-success-subtle text-success">Active</span>
                                         @else
@@ -90,18 +98,11 @@
                                         <div class="d-flex gap-2">
                                             <a href="{{ route('items.show', $item->id) }}" class="btn btn-sm btn-info">View</a>
                                             <a href="{{ route('items.edit', $item->id) }}" class="btn btn-sm btn-primary">Edit</a>
-                                            
-                                            <!-- 
-                                              FIX: Delete Form/Button ko Modal se trigger karengay
-                                              1. 'delete-item-form' aur 'delete-item-btn' classes remove kar di.
-                                              2. 'data-bs-toggle' aur 'data-bs-target' add kiya.
-                                              3. 'data-delete-url' add kiya taake JS ko URL mil sakay.
-                                              4. TYPO: type-="button" ko type="button" kar diya.
-                                            -->
+                                            <!-- Delete Form with Modal Trigger -->
                                             <button type="button" class="btn btn-sm btn-danger delete-item-btn" 
                                                     data-bs-toggle="modal" 
-                                                    data-bs-target="#deleteItemModal"
-                                                    data-delete-url="{{ route('items.destroy', $item->id) }}">
+                                                    data-bs-target="#deleteItemModal" 
+                                                    data-form-action="{{ route('items.destroy', $item->id) }}">
                                                 Delete
                                             </button>
                                         </div>
@@ -116,12 +117,12 @@
         </div>
     </div>
 
-    <!-- NEW: Delete Confirmation Modal -->
+    <!-- Delete Confirmation Modal -->
     <div class="modal fade" id="deleteItemModal" tabindex="-1" aria-labelledby="deleteItemModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteItemModalLabel">Confirm Deletion</h5>
+                    <h5 class="modal-title" id="deleteItemModalLabel">Confirm Delete</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -129,7 +130,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <form id="deleteModalForm" action="" method="POST" style="display:inline;">
+                    <!-- Form ko modal ke andar se submit karein gey -->
+                    <form id="deleteItemForm" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger">Yes, Delete</button>
@@ -138,22 +140,24 @@
             </div>
         </div>
     </div>
-    <!-- End Modal -->
 
 @endsection
 
 @section('script')
     @vite(['resources/js/pages/datatable.init.js'])
     <script>
+        // Delete Modal JavaScript
         document.addEventListener('DOMContentLoaded', function() {
             var deleteModal = document.getElementById('deleteItemModal');
-            var deleteModalForm = document.getElementById('deleteModalForm');
-
             deleteModal.addEventListener('show.bs.modal', function(event) {
+                // Button jo modal trigger kiya
                 var button = event.relatedTarget;
-                var deleteUrl = button.getAttribute('data-delete-url');
-                
-                deleteModalForm.setAttribute('action', deleteUrl);
+                // Form action URL ko data-form-action attribute se lein
+                var formAction = button.getAttribute('data-form-action');
+                // Modal ke andar form ko target karein
+                var deleteForm = document.getElementById('deleteItemForm');
+                // Form ka action update karein
+                deleteForm.action = formAction;
             });
         });
     </script>
