@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ItemController;
+use App\Http\Controllers\Admin\SelectCityPageController;
 use App\Http\Controllers\Admin\SplashScreenController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\RoleController;
@@ -37,4 +38,5 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 
     // --- NEW: Splash Screen CRUD (Dynamic Content) ---
     Route::resource('splash-screens', SplashScreenController::class);
+    Route::resource('select-city-pages', SelectCityPageController::class);
 });

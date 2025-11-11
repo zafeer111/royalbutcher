@@ -151,6 +151,14 @@
                                     <span>Splash Screen</span>
                                 </a>
                             </li>
+
+                            <!-- --- NEW: Select City Page Link --- -->
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('select-city-pages.*') ? 'active' : '' }}" 
+                                   href="{{ route('select-city-pages.index') }}">
+                                    <span>Select City Page</span>
+                                </a>
+                            </li> 
                         </ul>
                     </div>
                 </li>
