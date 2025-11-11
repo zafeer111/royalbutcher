@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ItemController;
+use App\Http\Controllers\Admin\SplashScreenController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
@@ -29,7 +30,11 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
 
     // Category Management
     Route::resource('categories', CategoryController::class);
-    
+
     // NEW: Item Management
     Route::resource('items', ItemController::class);
+
+
+    // --- NEW: Splash Screen CRUD (Dynamic Content) ---
+    Route::resource('splash-screens', SplashScreenController::class);
 });

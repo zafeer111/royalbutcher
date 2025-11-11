@@ -29,24 +29,24 @@
             <style>
                 /* Main sidebar pill buttons */
                 #side-menu.nav-pills .nav-link {
-                    padding-top: 0.8rem;    /* Thori vertical padding */
+                    padding-top: 0.8rem;
                     padding-bottom: 0.8rem;
-                    border-radius: 0.375rem; /* Rounded corners */
+                    border-radius: 0.375rem;
                     font-weight: 500;
-                    color: #495057;       /* Darker text */
+                    color: #495057;
                     transition: all 0.2s ease-in-out;
                 }
 
                 /* Hover effect for non-active buttons */
                 #side-menu.nav-pills .nav-link:not(.active):hover {
-                    background-color: #e9ecef; /* Light gray hover */
+                    background-color: #e9ecef;
                 }
 
                 /* Active button style */
                 #side-menu.nav-pills .nav-link.active {
-                    background-color: #0d6efd; /* Bootstrap primary blue */
+                    background-color: #0d6efd;
                     color: #fff;
-                    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3); /* Soft blue shadow */
+                    box-shadow: 0 4px 8px rgba(13, 110, 253, 0.3);
                 }
 
                 /* Sub-menu links */
@@ -55,7 +55,7 @@
                     padding-bottom: 0.6rem;
                     font-weight: normal;
                 }
-                
+
                 /* Active sub-menu link */
                 #side-menu .nav-second-level .nav-link.active {
                     background-color: transparent;
@@ -63,10 +63,10 @@
                     font-weight: 500;
                     box-shadow: none;
                 }
-                
+
                 /* Hover sub-menu link */
                 #side-menu .nav-second-level .nav-link:not(.active):hover {
-                    background-color: #f8f9fa; /* Very light gray */
+                    background-color: #f8f9fa;
                     color: #000;
                 }
 
@@ -74,34 +74,20 @@
                 .menu-arrow {
                     transition: transform 0.2s ease;
                 }
-                
-                /* Rotated arrow for active/expanded dropdown */
+
                 a[aria-expanded="true"] .menu-arrow {
                     transform: rotate(90deg);
                 }
             </style>
 
-
-            <!-- 
-                CHANGES:
-                1. Fixed 'class_alias' to 'class'.
-                2. Added 'nav-pills' to make links button-like.
-                3. Added 'px-3' for horizontal padding of the whole list.
-            -->
             <ul class="nav flex-column nav-pills px-3" id="side-menu">
 
                 <!-- Menu Title -->
                 <li class="nav-item">
-                    <!-- Removed 'px-3', padding is now on parent <ul> -->
                     <h6 class="nav-link text-muted text-uppercase small mt-2 mb-1">Menu</h6>
                 </li>
 
                 <!-- Dashboard Link -->
-                <!-- 
-                    CHANGES:
-                    1. Added 'my-1' for vertical spacing between buttons.
-                    2. Removed padding classes (py-2 px-3), now controlled by <style>.
-                -->
                 <li class="nav-item my-1">
                     <a class="nav-link d-flex align-items-center {{ request()->routeIs('home') ? 'active' : '' }}" 
                        href="{{ route('home') }}">
@@ -124,8 +110,7 @@
                     </a>
                 </li>
 
-                
-                <!-- NEW: Category Link -->
+                <!-- Category Link -->
                 <li class="nav-item my-1">
                     <a class="nav-link d-flex align-items-center {{ request()->routeIs('categories.*') ? 'active' : '' }}" 
                        href="{{ route('categories.index') }}">
@@ -133,8 +118,8 @@
                         <span> Categories </span>
                     </a>
                 </li>
-                
-                <!-- NEW: Items Link -->
+
+                <!-- Items Link -->
                 <li class="nav-item my-1">
                     <a class="nav-link d-flex align-items-center {{ request()->routeIs('items.*') ? 'active' : '' }}" 
                        href="{{ route('items.index') }}">
@@ -143,16 +128,42 @@
                     </a>
                 </li>
 
+                <!-- ==== DYNAMIC CONTENT DROPDOWN (FIXED UI) ==== -->
+                <li class="nav-item my-1">
+                    <a class="nav-link d-flex align-items-center {{ request()->routeIs('splash-screens.*') ? 'active' : '' }}"
+                       href="#sidebarContent"
+                       data-bs-toggle="collapse"
+                       role="button"
+                       aria-expanded="{{ request()->routeIs('splash-screens.*') ? 'true' : 'false' }}">
+                        <i data-feather="edit" class="me-2" style="width: 18px;"></i>
+                        <span> Dynamic Content </span>
+                        <span class="menu-arrow ms-auto">
+                            <i data-feather="chevron-right" style="width: 16px;"></i>
+                        </span>
+                    </a>
+
+                    <!-- Sub-menu -->
+                    <div class="collapse {{ request()->routeIs('splash-screens.*') ? 'show' : '' }}" id="sidebarContent">
+                        <ul class="nav flex-column ps-4 nav-second-level">
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('splash-screens.*') ? 'active' : '' }}"
+                                   href="{{ route('splash-screens.index') }}">
+                                    <span>Splash Screen</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <!-- ==== END DYNAMIC CONTENT ==== -->
+
                 <!-- User Management Dropdown (Spatie Permission Check) -->
                 @can('user_management')
                 <li class="nav-item my-1">
-                    <!-- Dropdown Toggle Link -->
                     <a class="nav-link d-flex justify-content-between align-items-center {{ request()->routeIs('user-management.*', 'role-management.*') ? 'active' : '' }}" 
                        href="#sidebarUserMgmt" 
                        data-bs-toggle="collapse" 
                        role="button" 
                        aria-expanded="{{ request()->routeIs('user-management.*', 'role-management.*') ? 'true' : 'false' }}">
-                        
                         <div class="d-flex align-items-center">
                             <i data-feather="users" class="me-2" style="width: 18px;"></i>
                             <span> User Management </span>
@@ -160,19 +171,9 @@
                         <span class="menu-arrow"></span>
                     </a>
 
-                    <!-- Collapsible Sub-menu -->
                     <div class="collapse {{ request()->routeIs('user-management.*', 'role-management.*') ? 'show' : '' }}" id="sidebarUserMgmt">
-                        <!-- 
-                            CHANGES:
-                            1. Fixed 'class.alias' to 'class'.
-                            2. Kept sub-menu simple (no pills).
-                        -->
-                        <ul class="nav flex-column ps-4"> <!-- Indented sub-menu -->
+                        <ul class="nav flex-column ps-4 nav-second-level">
                             <li class="nav-item">
-                                <!-- 
-                                    CHANGES:
-                                    1. Removed 'py-2'.
-                                -->
                                 <a class="nav-link {{ request()->routeIs('user-management.index') ? 'active' : '' }}" 
                                    href="{{ route('user-management.index') }}">
                                    <span>Users List</span>
@@ -190,7 +191,6 @@
                 @endcan
 
             </ul>
-
         </div>
         <!-- End Sidebar -->
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\ItemController;
+use App\Http\Controllers\Api\SplashScreenController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,6 +26,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::get('/cities', [CityController::class, 'index']);
+Route::get('/content/splash-screen', [SplashScreenController::class, 'getSplash']);
 
 // --- PUBLIC ROUTES (Login/Register) ---
 // User controller 

@@ -41,7 +41,6 @@ class CityController extends Controller
         }
 
         $cities = $query->orderBy('name', 'asc')
-            ->limit(50)
             ->get();
 
         return response()->json($cities);
