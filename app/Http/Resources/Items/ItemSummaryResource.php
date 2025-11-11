@@ -18,13 +18,12 @@ class ItemSummaryResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            // 'image' path ko poore URL mein convert karein
             'image_url' => $this->image ? Storage::url($this->image) : null,
             'base_price' => (float) $this->base_price,
             'discount_percent' => (float) $this->discount_percent,
             'discounted_price' => (float) $this->discounted_price,
-            // 'category' tabhi load hoga jab controller mein 'with()' istemaal kiya ho
             'category' => $this->whenLoaded('category'),
+            'add_ons' => $this->customization_options ?? [], 
         ];
     }
 }

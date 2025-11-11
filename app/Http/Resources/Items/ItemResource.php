@@ -27,6 +27,7 @@ class ItemResource extends JsonResource
             'customization_options' => $this->customization_options,
             'category' => $this->whenLoaded('category'),
             'created_at' => $this->created_at->toDateTimeString(),
+            'add_ons' => $this->customization_options ?? [], 
         ];
     }
 }
