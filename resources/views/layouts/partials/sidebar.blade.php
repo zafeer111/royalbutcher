@@ -159,6 +159,14 @@
                                     <span>Select City Page</span>
                                 </a>
                             </li> 
+
+                            <!-- --- NEW: Phone Number Page Link --- -->
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('phone-number-pages.*') ? 'active' : '' }}" 
+                                   href="{{ route('phone-number-pages.index') }}">
+                                    <span>Phone Number Page</span>
+                                </a>
+                            </li> 
                         </ul>
                     </div>
                 </li>
