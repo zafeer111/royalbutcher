@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\OtpPageController;
 use App\Http\Controllers\Admin\PhoneNumberPageController;
+use App\Http\Controllers\Admin\ProfilePageController;
 use App\Http\Controllers\Admin\SelectCityPageController;
 use App\Http\Controllers\Admin\SplashScreenController;
 use App\Http\Controllers\Auth\RegisteredUserController;
@@ -43,4 +44,5 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
     Route::resource('select-city-pages', SelectCityPageController::class);
     Route::resource('phone-number-pages', PhoneNumberPageController::class);
     Route::resource('otp-pages', OtpPageController::class);
+    Route::resource('profile-pages', ProfilePageController::class);
 });

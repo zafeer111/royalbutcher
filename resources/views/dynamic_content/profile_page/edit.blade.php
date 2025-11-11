@@ -1,0 +1,123 @@
+@extends('layouts.vertical', ['title' => 'Edit Profile Page Content'])
+
+@section('content')
+    <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+        <div class="flex-grow-1">
+            <h4 class="fs-18 fw-semibold m-0">Profile Page</h4>
+        </div>
+
+        <div class="text-end">
+            <ol class="breadcrumb m-0 py-0">
+                <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('profile-pages.index') }}">Profile Page</a></li>
+                <li class="breadcrumb-item active">Edit</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Form Validation -->
+    <div class="row">
+        <div class="col-xl-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white py-3">
+                    <h5 class="card-title mb-0 fw-semibold">Edit Profile Page Content</h5>
+                </div><!-- end card header -->
+
+                <div class="card-body">
+                    <form class="row g-3" action="{{ route('profile-pages.update', $profilePage->id) }}" method="POST">
+                        @csrf
+                        @method('PUT')
+
+                        <!-- Main Heading Field -->
+                        <div class="col-md-6">
+                            <label for="main_heading" class="form-label">Main Heading</label>
+                            <input type="text" name="main_heading" class="form-control @error('main_heading') is-invalid @enderror"
+                                id="main_heading" value="{{ old('main_heading', $profilePage->main_heading) }}" required>
+                            @error('main_heading')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        
+                        <!-- Button Text Field -->
+                        <div class="col-md-6">
+                            <label for="button_text" class="form-label">Button Text</label>
+                            <input type="text" name="button_text" class="form-control @error('button_text') is-invalid @enderror"
+                                id="button_text" value="{{ old('button_text', $profilePage->button_text) }}" required>
+                            @error('button_text')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Sub Heading Field -->
+                        <div class="col-md-12">
+                            <label for="sub_heading" class="form-label">Sub Heading</label>
+                            <textarea name="sub_heading" class="form-control @error('sub_heading') is-invalid @enderror"
+                                id="sub_heading" rows="2">{{ old('sub_heading', $profilePage->sub_heading) }}</textarea>
+                            @error('sub_heading')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <hr class="my-2">
+
+                        <!-- Name Hint/Placeholder -->
+                        <div class="col-md-6">
+                            <label for="name_hint" class="form-label">Name Hint</label>
+                            <input type="text" name="name_hint" class="form-control @error('name_hint') is-invalid @enderror"
+                                id="name_hint" value="{{ old('name_hint', $profilePage->name_hint) }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="name_placeholder" class="form-label">Name Placeholder</label>
+                            <input type="text" name="name_placeholder" class="form-control @error('name_placeholder') is-invalid @enderror"
+                                id="name_placeholder" value="{{ old('name_placeholder', $profilePage->name_placeholder) }}" required>
+                        </div>
+
+                        <!-- Email Hint/Placeholder -->
+                        <div class="col-md-6">
+                            <label for="email_hint" class="form-label">Email Hint</label>
+                            <input type="text" name="email_hint" class="form-control @error('email_hint') is-invalid @enderror"
+                                id="email_hint" value="{{ old('email_hint', $profilePage->email_hint) }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email_placeholder" class="form-label">Email Placeholder</label>
+                            <input type="text" name="email_placeholder" class="form-control @error('email_placeholder') is-invalid @enderror"
+                                id="email_placeholder" value="{{ old('email_placeholder', $profilePage->email_placeholder) }}" required>
+                        </div>
+
+                        <!-- Password Hint/Placeholder -->
+                        <div class="col-md-6">
+                            <label for="password_hint" class="form-label">Password Hint</label>
+                            <input type="text" name="password_hint" class="form-control @error('password_hint') is-invalid @enderror"
+                                id="password_hint" value="{{ old('password_hint', $profilePage->password_hint) }}" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="password_placeholder" class="form-label">Password Placeholder</label>
+                            <input type="text" name="password_placeholder" class="form-control @error('password_placeholder') is-invalid @enderror"
+                                id="password_placeholder" value="{{ old('password_placeholder', $profilePage->password_placeholder) }}" required>
+                        </div>
+
+
+                        <!-- Status Field -->
+                        <div class="col-md-12 mt-3">
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-select @error('status') is-invalid @enderror" name="status"
+                                id="status" required>
+                                <option value="1" {{ old('status', $profilePage->status) == 1 ? 'selected' : '' }}>Active</option>
+                                <option value="0" {{ old('status', $profilePage->status) == 0 ? 'selected' : '' }}>Inactive</option>
+                            </select>
+                            @error('status')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="col-12">
+                            <button class="btn btn-primary" type="submit">Update form</button>
+                            <a href="{{ route('profile-pages.index') }}" class="btn btn-light">Cancel</a>
+                        </div>
+                    </form>
+                </div> <!-- end card-body -->
+            </div> <!-- end card-->
+        </div> <!-- end col -->
+    </div>
+@endsection

@@ -176,6 +176,13 @@
                                 </a>
                             </li>
                             
+                             <!-- --- NEW: Profile Page Link --- -->
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('profile-pages.*') ? 'active' : '' }}" 
+                                   href="{{ route('profile-pages.index') }}">
+                                    <span>Profile Page</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </li>
