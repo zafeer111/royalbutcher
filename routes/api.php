@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CityController;
+use App\Http\Controllers\Api\ItemController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,13 +24,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-// --- PUBLIC ROUTES (Login/Register) ---
-// User controller 
 Route::get('/cities', [CityController::class, 'index']);
 
+// --- PUBLIC ROUTES (Login/Register) ---
+// User controller 
 Route::post('/send-otp', [UserController::class, 'sendOtp']);
 Route::post('/verify-otp', [UserController::class, 'verifyOtp']);
 
+
+// --- NEW: Public Item Routes ---
+Route::get('/items', [ItemController::class, 'index']);
+Route::get('/items/hot-discounts', [ItemController::class, 'hotDiscounts']);
+Route::get('/items/{item}', [ItemController::class, 'show']);
 
 
 // --- PROTECTED ROUTES ---
@@ -41,11 +48,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [UserController::class, 'logout']);
 
 
-    
+
     // --- NEW: Cart Module Routes ---
     Route::get('/cart', [CartController::class, 'getCart']);
     Route::post('/cart/add', [CartController::class, 'addToCart']);
     Route::put('/cart/update', [CartController::class, 'updateCartItem']);
     Route::delete('/cart/remove', [CartController::class, 'removeCartItem']);
 
+    
+    // --- NEW: Address Module Routes ---
+    Route::apiResource('addresses', AddressController::class);
+    Route::patch('/addresses/{address}/set-default', [AddressController::class, 'setDefault']);
 });

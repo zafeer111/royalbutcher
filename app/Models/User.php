@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany; 
 
 class User extends Authenticatable
 {
@@ -59,5 +60,15 @@ class User extends Authenticatable
     public function city()
     {
         return $this->belongsTo(\Nnjeim\World\Models\City::class, 'city_id');
+    }
+
+    public function cart(): HasMany
+    {
+        return $this->hasMany(Cart::class);
+    }
+
+    public function addresses(): HasMany
+    {
+        return $this->hasMany(Address::class);
     }
 }

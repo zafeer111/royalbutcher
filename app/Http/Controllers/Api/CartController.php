@@ -7,41 +7,38 @@ use App\Models\Cart;
 use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\Cart\CartResource;
 
 class CartController extends Controller
 {
-    /**
-     * Helper function to get cart summary
-     */
     private function getCartSummary($userId)
     {
-        // Cart items ko unke item details ke sath fetch karein
-        // Performance ke liye sirf zaroori item columns select kiye hain
         $cartItems = Cart::with([
-            'item:id,name,image,base_price,discount_percent,status'
-        ])->where('user_id', $userId)->get();
+                'item:id,name,image,base_price,discount_percent,status'
+            ])
+            ->where('user_id', $userId)
+            ->latest()
+            ->get();
 
         $totalPrice = 0;
         $totalItems = 0;
 
         foreach ($cartItems as $cartItem) {
-            // Agar item mojood hai (delete nahi howa)
             if ($cartItem->item) {
-                // 'discounted_price' accessor (jo Item model mein hai) istemaal karein
+                // Item model ka 'discounted_price' accessor istemaal karega
                 $totalPrice += $cartItem->item->discounted_price * $cartItem->quantity;
                 $totalItems += $cartItem->quantity;
             } else {
-                // Agar item database se delete ho gaya hai, tou cart se bhi hata dein
+                // Agar item delete ho gaya ho, tou cart se nikal dein
                 $cartItem->delete();
             }
         }
 
         return [
-            'items' => $cartItems,
+            'items' => $cartItems, // Raw collection
             'summary' => [
                 'total_items' => $totalItems,
                 'total_price' => round($totalPrice, 2),
-                // Yahan aap delivery fees waghera bhi add kar sakte hain
             ]
         ];
     }
@@ -53,12 +50,15 @@ class CartController extends Controller
     public function getCart()
     {
         $cartData = $this->getCartSummary(Auth::id());
-        return response()->json($cartData);
+
+        return response()->json([
+            'items' => CartResource::collection($cartData['items']),
+            'summary' => $cartData['summary']
+        ]);
     }
 
     /**
      * Method 2: Add an item to the cart
-     * Agar item pehle se hai, tou quantity barha dega.
      * Endpoint: POST /api/cart/add
      */
     public function addToCart(Request $request)
@@ -72,21 +72,17 @@ class CartController extends Controller
         $itemId = $request->item_id;
         $quantity = $request->quantity;
 
-        // Check karein item available hai
         $item = Item::find($itemId);
         if (!$item || !$item->status) {
             return response()->json(['message' => 'Item is not available'], 404);
         }
 
-        // Check karein agar item pehle se cart mein hai
         $cartItem = Cart::where('user_id', $userId)->where('item_id', $itemId)->first();
 
         if ($cartItem) {
-            // Item pehle se hai: quantity update karein (add karein)
             $cartItem->quantity += $quantity;
             $cartItem->save();
         } else {
-            // Item naya hai: create karein
             $cartItem = Cart::create([
                 'user_id' => $userId,
                 'item_id' => $itemId,
@@ -94,22 +90,25 @@ class CartController extends Controller
             ]);
         }
 
+        $cartData = $this->getCartSummary($userId);
         return response()->json([
             'message' => 'Item added to cart successfully',
-            'cart' => $this->getCartSummary($userId) // Updated cart wapis bhej dein
+            'cart' => [
+                'items' => CartResource::collection($cartData['items']),
+                'summary' => $cartData['summary']
+            ]
         ], 200);
     }
 
     /**
      * Method 3: Update item quantity (Toggle)
-     * Yeh item ki quantity ko specific number par set kar dega
      * Endpoint: PUT /api/cart/update
      */
     public function updateCartItem(Request $request)
     {
         $request->validate([
             'item_id' => 'required|exists:carts,item_id,user_id,' . Auth::id(),
-            'quantity' => 'required|integer|min:1', // Quantity 1 se kam nahi ho sakti
+            'quantity' => 'required|integer|min:1',
         ]);
 
         $userId = Auth::id();
@@ -121,9 +120,13 @@ class CartController extends Controller
             $cartItem->quantity = $request->quantity;
             $cartItem->save();
             
+            $cartData = $this->getCartSummary($userId);
             return response()->json([
                 'message' => 'Cart updated successfully',
-                'cart' => $this->getCartSummary($userId)
+                'cart' => [
+                    'items' => CartResource::collection($cartData['items']),
+                    'summary' => $cartData['summary']
+                ]
             ], 200);
         }
 
@@ -145,9 +148,13 @@ class CartController extends Controller
             ->where('item_id', $request->item_id)
             ->delete();
 
+        $cartData = $this->getCartSummary($userId);
         return response()->json([
             'message' => 'Item removed from cart successfully',
-            'cart' => $this->getCartSummary($userId)
+            'cart' => [
+                'items' => CartResource::collection($cartData['items']),
+                'summary' => $cartData['summary']
+            ]
         ], 200);
     }
 }
