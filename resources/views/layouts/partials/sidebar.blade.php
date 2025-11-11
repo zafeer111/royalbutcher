@@ -167,6 +167,15 @@
                                     <span>Phone Number Page</span>
                                 </a>
                             </li> 
+                            
+                            <!-- --- NEW: OTP Page Link --- -->
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('otp-pages.*') ? 'active' : '' }}" 
+                                   href="{{ route('otp-pages.index') }}">
+                                    <span>OTP Page</span>
+                                </a>
+                            </li>
+                            
                         </ul>
                     </div>
                 </li>

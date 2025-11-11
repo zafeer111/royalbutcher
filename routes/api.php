@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AddressController;
 use App\Http\Controllers\Api\CartController;
 use App\Http\Controllers\Api\CityController;
 use App\Http\Controllers\Api\ItemController;
+use App\Http\Controllers\Api\OtpPageController;
 use App\Http\Controllers\Api\PhoneNumberPageController;
 use App\Http\Controllers\Api\SelectCityPageController;
 use App\Http\Controllers\Api\SplashScreenController;
@@ -31,6 +32,7 @@ Route::get('/cities', [CityController::class, 'index']);
 Route::get('/content/splash-screen', [SplashScreenController::class, 'getSplash']);
 Route::get('/content/select-city-page', [SelectCityPageController::class, 'getCityPageContent']); 
 Route::get('/content/phone-number-page', [PhoneNumberPageController::class, 'getPageContent']);
+Route::get('/content/otp-page', [OtpPageController::class, 'getOtpPageContent']);
 
 // --- PUBLIC ROUTES (Login/Register) ---
 // User controller 
