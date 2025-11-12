@@ -26,9 +26,6 @@ return new class extends Migration
 
             // Re-usable Texts
             $table->string('text_see_all')->default('See all');
-
-            // Other Page Titles
-            $table->string('title_new_order_page')->default('New Order');
             
             $table->boolean('status')->default(true);
             $table->timestamps();
