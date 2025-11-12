@@ -17,12 +17,12 @@ class ProfilePageController extends Controller
              return response()->json([
                 'main_heading' => 'Create Your Profile',
                 'sub_heading' => 'Enter your personal details to set up your account.',
-                'name_hint' => 'Full Name',
-                'email_hint' => 'Email Address',
-                'password_hint' => 'Password',
-                'name_placeholder' => 'Your Name',
-                'email_placeholder' => 'ama@gmail.com',
-                'password_placeholder' => '**********',
+                'name_label' => 'Full Name',
+                'email_label' => 'Email Address',
+                'password_label' => 'Password',
+                'name_hint' => 'Enter your full name',
+                'email_hint' => 'Enter your email',
+                'password_hint' => 'Enter your password',
                 'button_text' => 'Done',
             ]);
         }
