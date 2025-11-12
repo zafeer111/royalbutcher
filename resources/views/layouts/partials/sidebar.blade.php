@@ -130,59 +130,122 @@
 
                 <!-- ==== DYNAMIC CONTENT DROPDOWN (FIXED UI) ==== -->
                 <li class="nav-item my-1">
-                    <a class="nav-link d-flex align-items-center {{ request()->routeIs('splash-screens.*') ? 'active' : '' }}"
-                       href="#sidebarContent"
-                       data-bs-toggle="collapse"
-                       role="button"
-                       aria-expanded="{{ request()->routeIs('splash-screens.*') ? 'true' : 'false' }}">
+                    <!-- Dropdown Toggle Link -->
+                    @php
+                        // --- UPDATED: 'new-order-pages.*' add karein ---
+                        $contentRoutes = ['splash-screens.*', 'select-city-pages.*', 'phone-number-pages.*', 'otp-pages.*',
+                         'home-page-contents.*', 'new-order-pages.*', 'order-customization-pages.*', 'cart-page-contents.*',
+                            'checkout-page-contents.*', 'add-address-pages.*', 'access-location-pages.*', 'profile-pages.*',
+                            'card-details-pages.*', 'successful-pages.*'];
+                    @endphp
+                    <a class="nav-link d-flex align-items-center {{ request()->routeIs($contentRoutes) ? 'active' : '' }}" 
+                       href="#sidebarContent" 
+                       data-bs-toggle="collapse" 
+                       role="button" 
+                       aria-expanded="{{ request()->routeIs($contentRoutes) ? 'true' : 'false' }}">
+                        
                         <i data-feather="edit" class="me-2" style="width: 18px;"></i>
                         <span> Dynamic Content </span>
-                        <span class="menu-arrow ms-auto">
-                            <i data-feather="chevron-right" style="width: 16px;"></i>
-                        </span>
+
+                        <span class="menu-arrow ms-auto"><i data-feather="chevron-right" style="width: 16px;"></i></span>
                     </a>
 
-                    <!-- Sub-menu -->
-                    <div class="collapse {{ request()->routeIs('splash-screens.*') ? 'show' : '' }}" id="sidebarContent">
-                        <ul class="nav flex-column ps-4 nav-second-level">
+                    <!-- Collapsible Sub-menu -->
+                    <div class="collapse {{ request()->routeIs($contentRoutes) ? 'show' : '' }}" id="sidebarContent">
+                        <ul class="nav flex-column ps-4">
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->routeIs('splash-screens.*') ? 'active' : '' }}"
+                                <a class="nav-link {{ request()->routeIs('splash-screens.*') ? 'active' : '' }}" 
                                    href="{{ route('splash-screens.index') }}">
                                     <span>Splash Screen</span>
                                 </a>
                             </li>
-
-                            <!-- --- NEW: Select City Page Link --- -->
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('select-city-pages.*') ? 'active' : '' }}" 
                                    href="{{ route('select-city-pages.index') }}">
                                     <span>Select City Page</span>
                                 </a>
-                            </li> 
-
-                            <!-- --- NEW: Phone Number Page Link --- -->
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('phone-number-pages.*') ? 'active' : '' }}" 
                                    href="{{ route('phone-number-pages.index') }}">
                                     <span>Phone Number Page</span>
                                 </a>
                             </li> 
-                            
-                            <!-- --- NEW: OTP Page Link --- -->
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('otp-pages.*') ? 'active' : '' }}" 
                                    href="{{ route('otp-pages.index') }}">
                                     <span>OTP Page</span>
                                 </a>
                             </li>
-                            
-                             <!-- --- NEW: Profile Page Link --- -->
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->routeIs('profile-pages.*') ? 'active' : '' }}" 
                                    href="{{ route('profile-pages.index') }}">
                                     <span>Profile Page</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('home-page-contents.*') ? 'active' : '' }}" 
+                                   href="{{ route('home-page-contents.index') }}">
+                                    <span>Home Page</span>
+                                </a>
+                            </li>
+                            <!-- --- NEW: New Order Page Link --- -->
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('new-order-pages.*') ? 'active' : '' }}" 
+                                   href="{{ route('new-order-pages.index') }}">
+                                    <span>New Order Page</span>
+                                </a>
+                            </li>
+                             <!-- --- NEW: Order Customization Page Link --- -->
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('order-customization-pages.*') ? 'active' : '' }}" 
+                                   href="{{ route('order-customization-pages.index') }}">
+                                    <span>Order Customization Page</span>
+                                </a>
+                            </li>
+                             <!-- --- NEW: Cart Page Link --- -->
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('cart-page-contents.*') ? 'active' : '' }}" 
+                                   href="{{ route('cart-page-contents.index') }}">
+                                    <span>Cart Page</span>
+                                </a>
+                            </li>
+                             <!-- --- NEW: Checkout Page Link --- -->
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('checkout-page-contents.*') ? 'active' : '' }}" 
+                                   href="{{ route('checkout-page-contents.index') }}">
+                                    <span>Checkout Page</span>
+                                </a>
+                            </li>
+                             <!-- --- NEW: Add Address Page Link --- -->
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('add-address-pages.*') ? 'active' : '' }}" 
+                                   href="{{ route('add-address-pages.index') }}">
+                                    <span>Add Address Page</span>
+                                </a>
+                            </li>
+                             <!-- --- NEW: Access Location Page Link --- -->
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('access-location-pages.*') ? 'active' : '' }}" 
+                                   href="{{ route('access-location-pages.index') }}">
+                                    <span>Access Location Page</span>
+                                </a>
+                            </li>
+                             <!-- --- NEW: Card Details Page Link --- -->
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('card-details-pages.*') ? 'active' : '' }}" 
+                                   href="{{ route('card-details-pages.index') }}">
+                                    <span>Card Details Page</span>
+                                </a>
+                            </li>
+                             <!-- --- NEW: Successful Page Link --- -->
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->routeIs('successful-pages.*') ? 'active' : '' }}" 
+                                   href="{{ route('successful-pages.index') }}">
+                                    <span>Successful Page</span>
+                                </a>
+                            </li>
+                            
                         </ul>
                     </div>
                 </li>

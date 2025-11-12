@@ -1,12 +1,21 @@
 <?php
 
+use App\Http\Controllers\Admin\AccessLocationPageController;
+use App\Http\Controllers\Admin\AddAddressPageController;
+use App\Http\Controllers\Admin\CardDetailsPageController;
+use App\Http\Controllers\Admin\CartPageContentController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\CheckoutPageContentController;
+use App\Http\Controllers\Admin\HomePageContentController;
 use App\Http\Controllers\Admin\ItemController;
+use App\Http\Controllers\Admin\NewOrderPageController;
+use App\Http\Controllers\Admin\OrderCustomizationPageController;
 use App\Http\Controllers\Admin\OtpPageController;
 use App\Http\Controllers\Admin\PhoneNumberPageController;
 use App\Http\Controllers\Admin\ProfilePageController;
 use App\Http\Controllers\Admin\SelectCityPageController;
 use App\Http\Controllers\Admin\SplashScreenController;
+use App\Http\Controllers\Admin\SuccessfulPageController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
@@ -45,4 +54,13 @@ Route::group(['prefix' => '/', 'middleware' => 'auth'], function () {
     Route::resource('phone-number-pages', PhoneNumberPageController::class);
     Route::resource('otp-pages', OtpPageController::class);
     Route::resource('profile-pages', ProfilePageController::class);
+    Route::resource('home-page-contents', HomePageContentController::class);
+    Route::resource('new-order-pages', NewOrderPageController::class);
+    Route::resource('order-customization-pages', OrderCustomizationPageController::class);
+    Route::resource('cart-page-contents', CartPageContentController::class);
+    Route::resource('checkout-page-contents', CheckoutPageContentController::class);
+    Route::resource('add-address-pages', AddAddressPageController::class);
+    Route::resource('access-location-pages', AccessLocationPageController::class);
+    Route::resource('card-details-pages', CardDetailsPageController::class);
+        Route::resource('successful-pages', SuccessfulPageController::class);
 });
